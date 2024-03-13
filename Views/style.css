@@ -112,3 +112,10 @@ html, body{
     padding-left: 10%;
     
 }
+.recobox{
+    margin-left: 5%;
+}
+.recipebox{
+    border: 0.5px solid black;
+    margin-right: 5%;
+}
