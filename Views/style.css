@@ -107,3 +107,8 @@ html, body{
 .accounticon{
     align-self: flex-end;
 }
+.loginbox{
+    padding-top: 2.5%;
+    padding-left: 10%;
+    
+}
