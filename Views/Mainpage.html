@@ -3,86 +3,79 @@
 <!--  This source code is exported from pxCode, you can get more document from https://www.pxcode.io  -->
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
-
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-    <link rel="stylesheet" type="text/css" href="./css/common.css" />
-    <link rel="stylesheet" type="text/css" href="./css/fonts.css" />
-    <link rel="stylesheet" type="text/css" href="./css/Mainpage.css" />
-    <script type="text/javascript" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/sticky-js@1.3.0/dist/sticky.min.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/headroom.js@0.12.0/dist/headroom.min.js"></script>
-
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tinira ni Benny</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body class="flex-column">
-    <div class="mainpage root">
-        <div class="content_box1">
-            <div class="flex_col">
-                <div class="content_box">
-                    <div class="rect"></div>
-                    <h1 class="hero_title">tINIRA NI BENNY</h1>
-                    <div class="wrapper" style="--src:url(../assets/e598a7a6d7d940f054e4f1384829d7dd.png)"></div>
-                </div>
-                <div class="rect1"></div>
+<body>
+    <main>
+        <div class="topbar">
+            <a href="home.html"> <img src="Assets/Logo.png"></a>
+            <a href="edituser.html"> <img src="Assets/accounticon.png"></a>
+        </div>
+
+        <header class="w3-display-container w3-center" style="position: relative;">
+            <img class="w3-image" src="Assets/recipe-book.jpg" alt="Me" style="width: 100%; max-height: 500px; object-fit:cover;">
+            <div class="overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.6);"></div>
+            <div class="w3-display-middle w3-border w3-wide w3-center" style="padding: 50px;">
+                <img src="Assets/Logo.png" style="height: 80px;">
+                <h4 style="color: gainsboro;">A Recipe Recommender to Reduce Food Waste</h4>
+                <button class="w3-button w3-padding-large w3-large w3-margin-top" style="background-color:#114232; color: gainsboro;" onclick="window.location.href = 'registerLogin.html';">Get Started</button>
             </div>
-            <div class="flex_col1">
-                <div class="flex_col2">
-                    <div class="flex_col3">
-                        <h1 class="big_title">Don’t know what to eat? ask us!</h1>
-                        <div class="rect11"></div>
-                    </div>
-                    <h2 class="medium_title">Diets or allergies?</h2>
+        </header>
+        
+        
+        <!-- First Grid -->
+        <div class="w3-row-padding w3-padding-64 w3-container">
+            <div class="w3-content">
+                <div class="w3-half">
+                    <h1>Reduce Waste With Every Meal</h1>
+                    <h5 class="w3-padding-16">Discover recipes based on what you already have in your kitchen. Tinira ni Benny helps you reduce food waste by suggesting delicious meals from your leftover ingredients.</h5>
+        
+                    <p>Our smart recommender system tailors recipes to your dietary preferences and available ingredients, ensuring that nothing goes to waste. Join us in our mission to save the planet, one meal at a time.</p>
                 </div>
-                <div class="box">
-                    <h1 class="big_title1">Search</h1>
-                </div>
-            </div>
-            <div class="flex_col4">
-                <div class="flex_row">
-                    <div class="flex_row1">
-                        <div class="rect3"></div>
-                        <h2 class="medium_title1">Vegan</h2>
-                    </div>
-                    <div class="flex_row2">
-                        <div class="rect3"></div>
-                        <h2 class="medium_title1">non-dairy</h2>
-                    </div>
-                    <div class="flex_row3">
-                        <div class="rect3"></div>
-                        <h2 class="medium_title1">Sugar-free</h2>
-                    </div>
-                    <div class="flex_row4">
-                        <div class="rect3"></div>
-                        <h2 class="medium_title1">shellfish-free</h2>
-                    </div>
-                </div>
-                <div class="flex_row5">
-                    <div class="flex_row6">
-                        <div class="rect3"></div>
-                        <h2 class="medium_title1">pork</h2>
-                    </div>
-                    <div class="flex_row7">
-                        <div class="rect3"></div>
-                        <h2 class="medium_title1">Beef</h2>
-                    </div>
-                    <div class="flex_row8">
-                        <div class="rect3"></div>
-                        <h2 class="medium_title1">Fish</h2>
-                    </div>
+        
+                <div class="w3-half w3-center">
+                    <img src="Assets/zero-waste.jpeg" alt="Zero Waste" height="300" style="max-width: 500px; object-fit:contain;">
                 </div>
             </div>
         </div>
-    </div>
-    <script type="text/javascript">
-        AOS.init();
-        new Sticky('.sticky-effect');
-    </script>
+        
+        <!-- Second Grid -->
+        <div class="w3-row-padding w3-padding-64 w3-container" style="background-color:#F7F6BB">
+            <div class="w3-content">
+                <div class="w3-half w3-center">
+                    <img src="Assets/personal-plan.jpg" alt="Personalized" height="300" style="max-width: 425px; object-fit:cover;">
+                </div>
+        
+                <div class="w3-half">
+                    <h1>Personalized to Your Taste</h1>
+                    <h5 class="w3-padding-16">Not only does Tinira ni Benny help you reduce waste, but it also learns your taste preferences for personalized recipe recommendations.</h5>
+        
+                    <p>Whether you're a vegan, keto enthusiast, or someone with dietary restrictions, our app ensures that you'll only get recipes that fit your lifestyle. Start exploring now and transform your leftover ingredients into culinary delights.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="w3-container w3-center" style="background-color:#87A922;">  
+            <div class="w3-xlarge w3-padding-16">
+                <!-- Add your social media links with icons here -->
+                <i class="fa fa-facebook-official w3-hover-opacity" style="color: #FCDC2A;"></i>
+                <i class="fa fa-instagram w3-hover-opacity" style="color: #FCDC2A;"></i>
+                <i class="fa fa-twitter w3-hover-opacity" style="color: #FCDC2A;"></i>
+                <i class="fa fa-linkedin w3-hover-opacity" style="color: #FCDC2A;"></i>
+           </div>
+           <p style="margin-top: 0px; color: #FCDC2A;"><strong>Basco • Licup • Longno • Martinez • Yabut</strong></p>
+        </footer>
+        
+    </main>
+    
 </body>
 
 </html>
