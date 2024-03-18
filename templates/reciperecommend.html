@@ -1,0 +1,101 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tinira ni Benny</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function goToRecipe(recipeId) {
+            window.location.href = `/recipe/${recipeId}`;
+        }
+    </script>
+</head>
+
+<body>
+    <main>
+        <div class="topbar">
+            <a href="{{ url_for('home') }}"> <img src="{{ url_for('static', filename='Assets/Logo.png') }}"></a>
+            <a href="{{ url_for('mainpage') }}"><p>Home</p></a>
+            <a href="{{ url_for('home') }}"><p>Recommender</p></a>
+            <a href="{{ url_for('edituser') }}"> <img src="{{ url_for('static', filename='Assets/accounticon.png') }}"></a>
+        </div>
+        <div class="cont">
+            
+            <div class="recobox">
+                <h2>Based on what you gave this is what we recommend:</h2>
+                <!-- Placeholder for recommendations -->
+                <div id="recommendations"></div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Recipe Name</th>
+                            <th>Description</th>
+                            <!-- Add more columns as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data %}
+                            <tr onclick="goToRecipe({{ row['id'] }})">
+                                <td>{{ row['name'] }}</td>
+                                <td>{{ row['description'] }}</td>
+                                <!-- Add more columns as needed -->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="botbar">
+
+        </div>
+
+    </main>
+
+    <!-- <script>
+        function fetchRecommendations() {
+            // Example POST request to the server
+            fetch('/recommend', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    // Include necessary data for the recommendation, e.g., user inputs
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const recommendationsContainer = document.getElementById('recommendations');
+                recommendationsContainer.innerHTML = ''; // Clear existing recommendations
+
+                data.recommendations.forEach(recipe => {
+                    // Create a new div for each recommendation
+                    const recDiv = document.createElement('div');
+                    recDiv.classList.add('recipebox');
+
+                    // Assuming each 'recipe' contains the name and possibly an ID or URL for the detail page
+                    const recLink = document.createElement('a');
+                    recLink.href = `recipepage.html?recipeId=${recipe.id}`; // Adjust URL as needed
+                    recLink.textContent = recipe.name;
+
+                    recDiv.appendChild(recLink);
+                    recommendationsContainer.appendChild(recDiv);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching recommendations:', error);
+            });
+        }
+
+        // Fetch recommendations when the page loads
+        document.addEventListener('DOMContentLoaded', fetchRecommendations);
+    </script> -->
+
+</body>
+
+</html>

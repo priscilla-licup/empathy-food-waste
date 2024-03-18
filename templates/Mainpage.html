@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tinira ni Benny</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -15,15 +15,17 @@
 <body>
     <main>
         <div class="topbar">
-            <a href="home.html"> <img src="Assets/Logo.png"></a>
-            <a href="edituser.html"> <img src="Assets/accounticon.png"></a>
+            <a href="{{ url_for('home') }}"> <img src="{{ url_for('static', filename='Assets/Logo.png') }}"></a>
+            <a href="{{ url_for('mainpage') }}"><p style="margin: 0px; text-align: justify;">About</p></a>
+            <a href="{{ url_for('home') }}"><p style="margin: 0px; text-align: justify;">Recommender</p></a>
+            <a href="{{ url_for('edituser') }}"> <img src="{{ url_for('static', filename='Assets/accounticon.png') }}"></a>
         </div>
 
         <header class="w3-display-container w3-center" style="position: relative;">
-            <img class="w3-image" src="Assets/recipe-book.jpg" alt="Me" style="width: 100%; max-height: 500px; object-fit:cover;">
+            <img class="w3-image" src="{{ url_for('static', filename='Assets/recipe-book.jpg') }}" alt="Me" style="width: 100%; max-height: 500px; object-fit:cover;">
             <div class="overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.6);"></div>
             <div class="w3-display-middle w3-border w3-wide w3-center" style="padding: 50px;">
-                <img src="Assets/Logo.png" style="height: 80px;">
+                <img src="{{ url_for('static', filename='Assets/Logo.png') }}" style="height: 80px;">
                 <h4 style="color: gainsboro;">A Recipe Recommender to Reduce Food Waste</h4>
                 <button class="w3-button w3-padding-large w3-large w3-margin-top" style="background-color:#114232; color: gainsboro;" onclick="window.location.href = 'registerLogin.html';">Get Started</button>
             </div>
@@ -41,7 +43,7 @@
                 </div>
         
                 <div class="w3-half w3-center">
-                    <img src="Assets/zero-waste.jpeg" alt="Zero Waste" height="300" style="max-width: 500px; object-fit:contain;">
+                    <img src="{{ url_for('static', filename='Assets/zero-waste.jpeg') }}" alt="Zero Waste" height="300" style="max-width: 500px; object-fit:contain;">
                 </div>
             </div>
         </div>
@@ -50,7 +52,7 @@
         <div class="w3-row-padding w3-padding-64 w3-container" style="background-color:#F7F6BB">
             <div class="w3-content">
                 <div class="w3-half w3-center">
-                    <img src="Assets/personal-plan.jpg" alt="Personalized" height="300" style="max-width: 425px; object-fit:cover;">
+                    <img src="{{ url_for('static', filename='Assets/personal-plan.jpg') }}" alt="Personalized" height="300" style="max-width: 425px; object-fit:cover;">
                 </div>
         
                 <div class="w3-half">

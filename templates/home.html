@@ -1,0 +1,84 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tinira ni Benny</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <main>
+        <div class="topbar">
+            <a href="{{ url_for('home') }}"> <img src="{{ url_for('static', filename='Assets/Logo.png') }}"></a>
+            <a href="{{ url_for('mainpage') }}"><p style="margin: 0px; text-align: justify;">About</p></a>
+            <a href="{{ url_for('home') }}"><p style="margin: 0px; text-align: justify;">Recommender</p></a>
+            <a href="{{ url_for('edituser') }}"> <img src="{{ url_for('static', filename='Assets/accounticon.png') }}"></a>
+        </div>
+        <div class="cont">
+           
+            <div class="flex_col1">
+                <div class="flex_col2">
+                    <div class="flex_col3">
+                        <form action="/recommend" method="post" id="preferencesForm">
+                        <h1 class="search_q">Don’t know what to eat? ask us!</h1>
+                        <!-- <p style="text-align: center">Separate your ingredients with commas (",")</p> -->
+                        <input type="text" name="ingredients" class="search_box" placeholder="What ingredients do you have? (Separate with commas)">
+                    </div>
+                    <h2 class="diets_allergies_title" style="margin-bottom: 0px;">Diets or allergies?</h2>
+                </div>
+                <div class="filters">
+                    <div class="filter-box">
+                        <h3>Food Preferences:</h3>
+                        <input type="checkbox" id="pork" name="foodPreference" value="pork">
+                        <label for="pork">Pork</label><br>
+                        <input type="checkbox" id="beef" name="foodPreference" value="beef">
+                        <label for="beef">Beef</label><br>
+                        <input type="checkbox" id="chicken" name="foodPreference" value="chicken">
+                        <label for="chicken">Chicken</label><br>
+                        <input type="checkbox" id="seafood" name="foodPreference" value="seafood">
+                        <label for="seafood">Seafood</label><br>
+                        <input type="checkbox" id="nuts" name="foodPreference" value="nuts">
+                        <label for="nuts">Nuts</label><br>
+                    </div>
+                
+                    <div class="filter-box">
+                        <h3>Dietary Preferences:</h3>
+                        <input type="checkbox" id="vegan" name="dietaryPreference" value="vegan">
+                        <label for="vegan">Vegan</label><br>
+                        <input type="checkbox" id="vegetarian" name="dietaryPreference" value="vegetarian">
+                        <label for="vegetarian">Vegetarian</label><br>
+                    </div>
+                
+                    <div class="filter-box">
+                        <h3>Allergens:</h3>
+                        <input type="checkbox" id="gluten-free" name="allergen" value="gluten-free">
+                        <label for="gluten-free">Gluten-free</label><br>
+                        <input type="checkbox" id="dairy-free" name="allergen" value="dairy-free">
+                        <label for="dairy-free">Dairy-free</label><br>
+                        <input type="checkbox" id="nut-free" name="allergen" value="nut-free">
+                        <label for="nut-free">Nut-free</label><br>
+                        <input type="checkbox" id="shellfish-free" name="allergen" value="shellfish-free">
+                        <label for="shellfish-free">Shellfish-free</label><br>
+                        <input type="checkbox" id="egg-free" name="allergen" value="egg-free">
+                        <label for="egg-free">Egg-free</label><br>
+                    </div>
+                </div>
+                
+                <div class="box">
+                    <button class="search_button" type="submit">Search</button>
+                </div>
+                </form>
+                </div>
+        </div>
+        
+        <div class="botbar">
+        
+        </div>
+        
+    </main>
+    
+</body>
+
+</html>
