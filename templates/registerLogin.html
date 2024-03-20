@@ -12,10 +12,8 @@
 <body>
     <main>
         <div class="topbar">
-            <a href="{{ url_for('home') }}"> <img src="{{ url_for('static', filename='Assets/Logo.png') }}"></a>
+            <a href="{{ url_for('mainpage') }}"> <img src="{{ url_for('static', filename='Assets/Logo.png') }}"></a>
             <a href="{{ url_for('mainpage') }}"><p style="margin: 0px; text-align: justify;">About</p></a>
-            <a href="{{ url_for('home') }}"><p style="margin: 0px; text-align: justify;">Recommender</p></a>
-            <a href="{{ url_for('edituser') }}"> <img src="{{ url_for('static', filename='Assets/accounticon.png') }}"></a>
         </div>
         <div class="cont">
             <h2>Don't have an account? Sign up here!</h2>

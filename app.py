@@ -253,6 +253,14 @@ def login():
         print("Error logging in:", e)
         return "Error logging in.", 500
 
+@app.route('/logout')
+def logout():
+    # Clear the session data
+    session.clear()
+    # Redirect the user to the home page or any other appropriate page
+    return render_template('Mainpage.html')
+
+
 @app.route("/debug")
 def debug():
     return jsonify(session)
