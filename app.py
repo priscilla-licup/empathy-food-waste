@@ -21,8 +21,8 @@ def load_data():
 #    df = pd.read_csv(file_path)
     
 #    df = pd.read_csv(r'D:\DLSU\PM\4th Year - Term 2 (23-24)\EMPATHY\Datasets\recipes_ingredients.csv')
-#    df = pd.read_csv(r'C:\Users\Angel\Desktop\EMPATHY\Test\empathy-food-waste\recipes_ingredients.csv')
-    df = pd.read_csv(r'C:\Users\3515\Downloads\empathy\empathy-food-waste\recipes_ingredients.csv')
+    df = pd.read_csv(r'D:\DLSU\PM\4th Year - Term 2 (23-24)\EMPATHY\Datasets\recipes_ingredients_sample.csv')
+    # df = pd.read_csv(r'C:\Users\3515\Downloads\empathy\empathy-food-waste\recipes_ingredients.csv')
     
     # Correctly interpret 'ingredients', 'procedures', and 'tags' columns as lists
     df['ingredients'] = df['ingredients'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [])
@@ -63,7 +63,18 @@ def mainpage():
 # Home/Model Page
 @app.route('/')
 def home():
-    return render_template('home.html')  # Create an index.html template for your form
+    login_username = session["username"]
+
+    user = mongo.db.users.find_one({"name": login_username})
+    
+    food_preferences = user['food_preferences']
+    dietary_preferences = user['dietary_preferences']
+    allergens = user['allergens']
+
+    if user == None :
+        return render_template('home.html')
+    else:
+        return render_template('home.html', food_preferences=food_preferences, dietary_preferences=dietary_preferences, allergens=allergens)  # Create an index.html template for your form
 
 # Edit User Page -- MICH
 @app.route('/edituser')
@@ -83,31 +94,51 @@ def update_user():
     food_preferences = request.form.getlist('foodPreference')
     dietary_preferences = request.form.getlist('dietaryPreference')
     allergens = request.form.getlist('allergen')
-    
-    # Validate form data (for example, check if passwords match)
-    if new_password != confirm_password:
-        return "Passwords do not match. Please try again."
-    
+
+    food_preferences = [x.lower() for x in food_preferences]
+    dietary_preferences = [x.lower() for x in dietary_preferences]
+    allergens = [x.lower() for x in allergens]
+
     # Update user information in the database or perform other necessary actions
     try:
-        # Hash the new password before updating
-        salt_rounds = 15
-        hashed_password = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt(salt_rounds))
-        
-        # Update user information in the database
-        mongo.db.users.update_one(
-            {"name": username},
-            {"$set": {
-                "password": hashed_password.decode(),
-                "email": email,
-                "food_preferences": food_preferences,
-                "dietary_preferences": dietary_preferences,
-                "allergens": allergens
-            }}
-        )
+        if username == "" or new_password == "" or confirm_password == "" or email == "" :
+            oldusername = session['username']
+            # Update user information in the database
+            mongo.db.users.update_one(
+                {"name": oldusername},
+                {"$set": {
+                    "food_preferences": food_preferences,
+                    "dietary_preferences": dietary_preferences,
+                    "allergens": allergens
+                }}
+            )
+        else:
+            # Validate form data (for example, check if passwords match)
+            if new_password != confirm_password:
+                return "Passwords do not match. Please try again."
+    
+            # Hash the new password before updating
+            salt_rounds = 15
+            hashed_password = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt(salt_rounds))
+            
+            # Update user information in the database
+            mongo.db.users.update_one(
+                {"name": username},
+                {"$set": {
+                    "password": hashed_password.decode(),
+                    "email": email,
+                    "food_preferences": food_preferences,
+                    "dietary_preferences": dietary_preferences,
+                    "allergens": allergens
+                }}
+            )
+
+        print(food_preferences)
+        print(dietary_preferences)
+        print(allergens)
 
         # Redirect the user back to the edituser page or any other appropriate page
-        return render_template('edituser.html')
+        return render_template('edituser.html', food_preferences=food_preferences, dietary_preferences=dietary_preferences, allergens=allergens)
 
     except Exception as e:
         print("Error updating user information:", e)

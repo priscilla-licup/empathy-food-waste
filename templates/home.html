@@ -31,37 +31,37 @@
                 <div class="filters">
                     <div class="filter-box">
                         <h3>Food Preferences:</h3>
-                        <input type="checkbox" id="pork" name="foodPreference" value="pork">
+                        <input type="checkbox" id="pork" name="foodPreference" value="pork" {% if "pork" in food_preferences %}checked{% endif %}>
                         <label for="pork">Pork</label><br>
-                        <input type="checkbox" id="beef" name="foodPreference" value="beef">
+                        <input type="checkbox" id="beef" name="foodPreference" value="beef" {% if "beef" in food_preferences %}checked{% endif %}>
                         <label for="beef">Beef</label><br>
-                        <input type="checkbox" id="chicken" name="foodPreference" value="chicken">
+                        <input type="checkbox" id="chicken" name="foodPreference" value="chicken" {% if "chicken" in food_preferences %}checked{% endif %}>
                         <label for="chicken">Chicken</label><br>
-                        <input type="checkbox" id="seafood" name="foodPreference" value="seafood">
+                        <input type="checkbox" id="seafood" name="foodPreference" value="seafood" {% if "seafood" in food_preferences %}checked{% endif %}>
                         <label for="seafood">Seafood</label><br>
-                        <input type="checkbox" id="nuts" name="foodPreference" value="nuts">
+                        <input type="checkbox" id="nuts" name="foodPreference" value="nuts" {% if "nuts" in food_preferences %}checked{% endif %}>
                         <label for="nuts">Nuts</label><br>
                     </div>
                 
                     <div class="filter-box">
                         <h3>Dietary Preferences:</h3>
-                        <input type="checkbox" id="vegan" name="dietaryPreference" value="vegan">
+                        <input type="checkbox" id="vegan" name="dietaryPreference" value="vegan" {% if "vegan" in dietary_preferences %}checked{% endif %}>
                         <label for="vegan">Vegan</label><br>
-                        <input type="checkbox" id="vegetarian" name="dietaryPreference" value="vegetarian">
+                        <input type="checkbox" id="vegetarian" name="dietaryPreference" value="vegetarian" {% if "vegetarian" in dietary_preferences %}checked{% endif %}>
                         <label for="vegetarian">Vegetarian</label><br>
                     </div>
                 
                     <div class="filter-box">
                         <h3>Allergens:</h3>
-                        <input type="checkbox" id="gluten-free" name="allergen" value="gluten-free">
+                        <input type="checkbox" id="gluten-free" name="allergen" value="gluten-free" {% if "gluten-free" in allergens %}checked{% endif %}>
                         <label for="gluten-free">Gluten-free</label><br>
-                        <input type="checkbox" id="dairy-free" name="allergen" value="dairy-free">
+                        <input type="checkbox" id="dairy-free" name="allergen" value="dairy-free" {% if "dairy-free" in allergens %}checked{% endif %}>
                         <label for="dairy-free">Dairy-free</label><br>
-                        <input type="checkbox" id="nut-free" name="allergen" value="nut-free">
+                        <input type="checkbox" id="nut-free" name="allergen" value="nut-free" {% if "nut-free" in allergens %}checked{% endif %}>
                         <label for="nut-free">Nut-free</label><br>
-                        <input type="checkbox" id="shellfish-free" name="allergen" value="shellfish-free">
+                        <input type="checkbox" id="shellfish-free" name="allergen" value="shellfish-free" {% if "shellfish-free" in allergens %}checked{% endif %}>
                         <label for="shellfish-free">Shellfish-free</label><br>
-                        <input type="checkbox" id="egg-free" name="allergen" value="egg-free">
+                        <input type="checkbox" id="egg-free" name="allergen" value="egg-free" {% if "egg-free" in allergens %}checked{% endif %}>
                         <label for="egg-free">Egg-free</label><br>
                     </div>
                 </div>
