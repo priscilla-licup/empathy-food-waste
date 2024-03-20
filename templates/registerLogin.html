@@ -1,55 +1,195 @@
+<!DOCTYPE html>
 <html lang="en">
-
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tinira ni Benny</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
     <main>
         <div class="topbar">
-            <a href="home.html"> <img src="Assets/Logo.png"></a>
-            <a href="edituser.html"> <img class="accounticon" src="Assets/accounticon.png"></a>
+            <a href="home.html"> <img src="static/Assets/Logo.png"></a>
+            <a href="edituser.html"> <img class="accounticon" src="static/Assets/accounticon.png"></a>
         </div>
         <div class="cont">
             <h2>Don't have an account? Sign up here!</h2>
             <div class="formcont">
-                
+
                 <div class="formbox">
                     <h3>Sign up Here!</h3>
-                    <form>
+                    <form id="register-form" action="/register" method="post">
                         <label for="username">Username</label><br>
-                        <input type="text" id="username" name="username"><br><br>
+                        <input type="text" id="username" name="username"><br>
+                        <span id="username-message" class="error"></span><br><br>
+
                         <label for="regpassword">Password</label><br>
-                        <input type="password" id="regpassword" name="regpassword"><br><br>
+                        <input type="password" id="regpassword" name="regpassword"><br>
+                        <span id="regpassword-message" class="error"></span><br><br>
+
                         <label for="regpassword2">Confirm Password</label><br>
-                        <input type="password" id="regpassword2" name="regpassword2"><br><br>
+                        <input type="password" id="regpassword2" name="regpassword2"><br>
+                        <span id="regpassword2-message" class="error"></span><br><br>
+
                         <label for="Email">Email</label><br>
-                        <input type="text" id="Email" name="Email"><br><br>
-                        <button class="Register">Register</button>
+                        <input type="text" id="Email" name="Email"><br>
+                        <span id="email-message" class="error"></span><br><br>
+
+                        <button class="Register" type="submit">Register</button>
                     </form>
                 </div>
                 <div class="loginbox">
                     <h3>Login Here!</h3>
-                    <form>
-                        <label for="username">Username</label><br>
-                        <input type="text" id="username" name="username"><br><br>
-                        <label for="password">Password</label><br>
-                        <input type="password" id="password" name="password"><br><br><br>
-                        <button class="login">Login</button>
+                    <form id="login-form" action="/login" method="post">
+                        <label for="login-username">Username</label><br>
+                        <input type="text" id="login-username" name="loginusername"><br>
+                        <span id="userlogin-message" class="error"></span><br><br><br>
+
+                        <label for="login-password">Password</label><br>
+                        <input type="password" id="login-password" name="loginpassword"><br>
+                        <span id="userpassword-message" class="error"></span><br><br><br>
+
+                        <button class="login" type="submit">Login</button>
                     </form>
                 </div>
+            </div>
         </div>
-        </div>  
-        <div class="botbar">
-
-        </div>
-
+        <div class="botbar"></div>
     </main>
 
 </body>
-
 </html>
+
+
+<script>
+
+    //Register
+    const registerform = document.querySelector('#register-form');
+    const usernameMessage = document.querySelector('#username-message');
+    const regpasswordMessage = document.querySelector('#regpassword-message');
+    const regpassword2Message = document.querySelector('#regpassword2-message');
+    const emailMessage = document.querySelector('#email-message');
+    
+    registerform.addEventListener('submit', async (event) => {
+        event.preventDefault();
+    
+        const username = document.querySelector('#username').value;
+        const password = document.querySelector('#regpassword').value;
+        const confirmPassword = document.querySelector('#regpassword2').value;
+        const email = document.querySelector('#Email').value;
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/register', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+    
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+
+                const response = JSON.parse(xhr.responseText);
+                
+                if (username.trim() === '') {
+                    usernameMessage.innerHTML = '*Required';
+                } else if (response.usernameExists) {
+                    usernameMessage.innerHTML = 'Username is already taken';
+                } else {
+                    usernameMessage.innerHTML = ' ';
+                }
+    
+                if (email.trim() === '') {
+                    emailMessage.innerHTML = '*Required';
+                } else if (response.emailExists) {
+                    emailMessage.innerHTML = 'Email is already taken';
+                } else {
+                    emailMessage.innerHTML = ' ';
+                }
+    
+                if (password.trim() === '') {
+                    regpasswordMessage.innerHTML = '*Required';
+                } else if (!response.passwordLength){
+                    regpasswordMessage.textContent = 'Must be at least 8 characters';
+                } else {
+                    regpasswordMessage.textContent = ' ';
+                }
+
+                if (confirmPassword.trim() === '') {
+                    regpassword2Message.innerHTML = '*Required';
+                } else if (response.passwordsMatch === false) {
+                    regpassword2Message.textContent = 'Passwords do not match.';
+                } else {
+                    regpassword2Message.textContent = '';
+                }
+    
+                if (response.success) {
+                    window.location.href = '/main';
+                }
+    
+            } else {
+                console.error('Error:', xhr.status);
+                message.innerHTML = 'Error registering user';
+            }
+        };
+    
+        xhr.onerror = () => {
+            console.error('XHR Error:', xhr.status);
+            message.innerHTML = 'Error registering user';
+        };
+    
+        xhr.send(JSON.stringify({ username, regpassword: password, regpassword2: confirmPassword, Email: email }));
+    });
+    
+    // Login
+    const loginForm = document.querySelector('#login-form');
+    const userloginMessage = document.querySelector('#userlogin-message');
+    const userpasswordMessage = document.querySelector('#userpassword-message');
+    
+    loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+    
+        const usernameLogin = document.querySelector('#login-username').value;
+        const passwordLogin = document.querySelector('#login-password').value;
+    
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/login', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+    
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+    
+                if (usernameLogin === '') {
+                    userloginMessage.innerHTML = 'Please enter username';
+                } else if (response.usernameNotFound) {
+                    userloginMessage.innerHTML = 'Username not found';
+                } else if (!response.usernameNotFound){
+                    userloginMessage.innerHTML = ' ';
+    
+                    if (passwordLogin === '') {
+                        userpasswordMessage.innerHTML = 'Please input password';
+                    } else if (response.incorrectPassword) {
+                        userpasswordMessage.innerHTML = 'Incorrect password';
+                    } else {
+                        userpasswordMessage.innerHTML = ' ';
+                        window.location.href = '/main';
+                    } 
+    
+                } 
+            
+            } else {
+                console.error('Error:', xhr.status);
+                userloginMessage.innerHTML = 'Error logging in';
+            }
+        };
+    
+        xhr.onerror = () => {
+            console.error('XHR Error:', xhr.status);
+            userloginMessage.innerHTML = 'Error logging in';
+        };
+    
+        xhr.send(JSON.stringify({ loginusername: usernameLogin, loginpassword: passwordLogin }));
+    
+    });
+    
+    </script>
