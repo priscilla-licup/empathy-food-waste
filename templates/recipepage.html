@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Recipe</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -26,8 +26,8 @@
                 </div>
                 <div class="procedureblock">
                     <h2>Procedures:</h2>
-                    {% for procedure in row['procedures'] %}
-                    <h4>{{ procedure }}</h4>
+                    {% for step in row['steps'] %}
+                    <h4>{{ step }}</h4>
                     {% endfor %}
                 </div>
             </div>

@@ -16,15 +16,15 @@ mongo = PyMongo(app)
 # Load your dataset here
 def load_data():
 #    file_path = 'C:\Users\Angel\Desktop\EMPATHY\Test\empathy-food-waste\recipes_ingredients.csv'  # Update this path
+    # df = pd.read_csv(r'D:\DLSU\PM\4th Year - Term 2 (23-24)\EMPATHY\Datasets\recipes_ingredients.csv')
 #    df = pd.read_csv(file_path)
     
-    df = pd.read_csv(r'C:\Users\Angel\Desktop\EMPATHY\FoodWaste\empathy-food-waste\recipes_ingredients.csv')
+    df = pd.read_csv(r'D:\DLSU\PM\4th Year - Term 2 (23-24)\EMPATHY\Datasets\recipes_ingredients.csv')
     
     # Correctly interpret 'ingredients', 'procedures', and 'tags' columns as lists
     df['ingredients'] = df['ingredients'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [])
     df['tags'] = df['tags'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [])
-    df['procedures'] = df['procedures'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [])
-
+    df['steps'] = df['steps'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else []) 
 
     # Combine ingredients and tags into a single string per recipe
     df['combined_features'] = df.apply(lambda row: ' '.join(row['ingredients']) + ' ' + ' '.join(row['tags']), axis=1)

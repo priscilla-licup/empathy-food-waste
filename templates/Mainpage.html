@@ -27,7 +27,7 @@
             <div class="w3-display-middle w3-border w3-wide w3-center" style="padding: 50px;">
                 <img src="{{ url_for('static', filename='Assets/Logo.png') }}" style="height: 80px;">
                 <h4 style="color: gainsboro;">A Recipe Recommender to Reduce Food Waste</h4>
-                <button class="w3-button w3-padding-large w3-large w3-margin-top" style="background-color:#114232; color: gainsboro;" onclick="window.location.href = 'registerLogin.html';">Get Started</button>
+                <a href="{{ url_for('edituser') }}"><button class="w3-button w3-padding-large w3-large w3-margin-top" style="background-color:#114232; color: gainsboro;" >Get Started</button></a>
             </div>
         </header>
         
