@@ -12,9 +12,11 @@ def load_data():
     file_path = 'C:\\Users\\Solid State Drive\\Documents\\GitHub\\empathy-food-waste\\recipes_ingredients.csv'  # Update this path
     df = pd.read_csv(file_path)
     
-    # Correctly interpret 'ingredients' and 'tags' columns as lists
+    # Correctly interpret 'ingredients', 'procedures', and 'tags' columns as lists
     df['ingredients'] = df['ingredients'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [])
     df['tags'] = df['tags'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [])
+    df['procedures'] = df['procedures'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [])
+
 
     # Combine ingredients and tags into a single string per recipe
     df['combined_features'] = df.apply(lambda row: ' '.join(row['ingredients']) + ' ' + ' '.join(row['tags']), axis=1)
@@ -52,10 +54,29 @@ def mainpage():
 def home():
     return render_template('home.html')  # Create an index.html template for your form
 
-# Edit User Page
+# Edit User Page -- MICH
 @app.route('/edituser')
 def edituser():
     return render_template('edituser.html')  # Create an index.html template for your form
+
+# Update User Information
+@app.route('/update_user', methods=['POST'])
+def update_user():
+    # Retrieve form data
+    username = request.form['username']
+    new_password = request.form['newpassword']
+    confirm_password = request.form['confpassword']
+    email = request.form['Email']
+    
+    # Validate form data (for example, check if passwords match)
+    if new_password != confirm_password:
+        return "Passwords do not match. Please try again."
+    
+    # Update user information in the database or perform other necessary actions
+    # will add here ! when nahanap ko na db AHSAHA
+
+    # Redirect the user back to the edituser page or any other appropriate page
+    return render_template('edituser.html')
 
 # Recipe Recommendations Page
 @app.route('/recommend', methods=['POST'])
@@ -98,7 +119,7 @@ def recommend():
 
     return render_template('reciperecommend.html', data=recommendations_list)
 
-# Individual Recipe Page
+# Individual Recipe Page -- MICH
 @app.route('/recipe/<int:recipe_id>')
 def show_recipe(recipe_id):
     row = df[df['id'] == recipe_id]

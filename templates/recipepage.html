@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<<<<<<< HEAD:templates/recipepage.html
     <title>Tinira ni Benny</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+=======
+    <title>Recipe</title>
+    <link rel="stylesheet" href="./style.css">
+>>>>>>> editUser_indivRecipe:Views/recipepage.html
 </head>
 
 <body>
@@ -16,10 +21,11 @@
             <a href="{{ url_for('home') }}"><p style="margin: 0px; text-align: justify;">Recommender</p></a>
             <a href="{{ url_for('edituser') }}"> <img src="{{ url_for('static', filename='Assets/accounticon.png') }}"></a>
         </div>
-        <div class="cont">
 
+        <div class="cont">
             <div class="recipeblock">
                 <div class="ingredientsblock">
+<<<<<<< HEAD:templates/recipepage.html
                     <h2>Ingredients:</h2>
                     <h4>ingredient1</h4>
                     <p>{{ row['ingredients'] }}</p>
@@ -28,6 +34,17 @@
                     <h2>Prodecures:</h2>
                     <h4>ingredient1</h4>
                     <p>{{ row['steps'] }}</p>
+=======
+                    {% for ingredient in row['ingredients'] %}
+                    <h4>{{ ingredient }}</h4>
+                    {% endfor %}
+                </div>
+                <div class="procedureblock">
+                    <h2>Procedures:</h2>
+                    {% for procedure in row['procedures'] %}
+                    <h4>{{ procedure }}</h4>
+                    {% endfor %}
+>>>>>>> editUser_indivRecipe:Views/recipepage.html
                 </div>
             </div>
 
