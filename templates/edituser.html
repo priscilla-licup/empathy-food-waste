@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Edit User Information</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
     <main>
         <div class="topbar">
-           <a href="home.html"> <img src="Assets/Logo.png"></a>
-           <a href="edituser.html"> <img class="accounticon" src="Assets/accounticon.png"></a>
+            <a href="{{ url_for('home') }}"> <img src="{{ url_for('static', filename='Assets/Logo.png') }}"></a>
+            <a href="{{ url_for('mainpage') }}"><p style="margin: 0px; text-align: justify;">About</p></a>
+            <a href="{{ url_for('home') }}"><p style="margin: 0px; text-align: justify;">Recommender</p></a>
+            <a href="{{ url_for('edituser') }}"> <img src="{{ url_for('static', filename='Assets/accounticon.png') }}"></a>
         </div>
         <div class="cont">
             <h1>Need to Change Your Information?</h1>
