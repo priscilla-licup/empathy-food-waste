@@ -25,10 +25,15 @@
                     {% endfor %}
                 </div>
                 <div class="procedureblock">
-                    <h2>Procedures:</h2>
-                    {% for step in row['steps'] %}
-                    <h4>{{ step }}</h4>
-                    {% endfor %}
+                    <h2>Procedure:</h2>
+                    <ul>
+                        {% for step in row['steps'].split('"') %}
+                            {% set formatted_step = step|replace(',', '') %}
+                            {% if formatted_step.strip() %}
+                                <h4><li>{{ formatted_step }}</li></h4>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
 
