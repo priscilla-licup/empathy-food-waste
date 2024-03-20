@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, session
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -9,6 +9,7 @@ from bson import ObjectId
 import bcrypt
 
 app = Flask(__name__)
+app.secret_key = b'a1d5376930deb474939b8bcf'
 
 app.config["MONGO_URI"] = "mongodb://localhost:27017/Login"
 mongo = PyMongo(app)
@@ -20,10 +21,9 @@ def load_data():
 #    df = pd.read_csv(file_path)
     
 #    df = pd.read_csv(r'D:\DLSU\PM\4th Year - Term 2 (23-24)\EMPATHY\Datasets\recipes_ingredients.csv')
-    df = pd.read_csv(r'C:\Users\3515\Downloads\empathy\empathy-food-waste\recipes_ingredients.csv')
-
-
-    # Correctly interpret 'ingredients', 'steps', and 'tags' columns as lists
+    df = pd.read_csv(r'C:\Users\Angel\Desktop\EMPATHY\Test\empathy-food-waste\recipes_ingredients.csv')
+    
+    # Correctly interpret 'ingredients', 'procedures', and 'tags' columns as lists
     df['ingredients'] = df['ingredients'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [])
     df['tags'] = df['tags'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [])
 #    df['steps'] = df['steps'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else []) 
@@ -206,6 +206,7 @@ def register():
             salt_rounds = 15
             hashed_password = bcrypt.hashpw(regpassword.encode(), bcrypt.gensalt(salt_rounds))
             mongo.db.users.insert_one({"name": username, "password": hashed_password.decode(), "email": email})
+            session['username'] = username
             
         return jsonify(response), 200    
 
@@ -230,6 +231,7 @@ def login():
             is_password_match = bcrypt.checkpw(login_password.encode(), user["password"].encode())
             if is_password_match:
                 response["success"] = True
+                session['username'] = login_username
             else:
                 response["incorrectPassword"] = True
 
@@ -239,6 +241,10 @@ def login():
         print("Error logging in:", e)
         return "Error logging in.", 500
 
+@app.route("/debug")
+def debug():
+    return jsonify(session)
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
