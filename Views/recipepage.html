@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tinira ni Benny</title>
+    <title>Recipe</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 
@@ -14,16 +14,19 @@
             <a href="home.html"> <img src="Assets/Logo.png"></a>
             <a href="edituser.html"> <img src="Assets/accounticon.png"></a>
         </div>
-        <div class="cont">
 
+        <div class="cont">
             <div class="recipeblock">
                 <div class="ingredientsblock">
-                    <h2>Ingredients:</h2>
-                    <h4>ingredient1</h4>
+                    {% for ingredient in row['ingredients'] %}
+                    <h4>{{ ingredient }}</h4>
+                    {% endfor %}
                 </div>
                 <div class="procedureblock">
-                    <h2>Prodecures:</h2>
-                    <h4>ingredient1</h4>
+                    <h2>Procedures:</h2>
+                    {% for procedure in row['procedures'] %}
+                    <h4>{{ procedure }}</h4>
+                    {% endfor %}
                 </div>
             </div>
 
