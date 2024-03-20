@@ -21,7 +21,8 @@ def load_data():
 #    df = pd.read_csv(file_path)
     
 #    df = pd.read_csv(r'D:\DLSU\PM\4th Year - Term 2 (23-24)\EMPATHY\Datasets\recipes_ingredients.csv')
-    df = pd.read_csv(r'C:\Users\Angel\Desktop\EMPATHY\Test\empathy-food-waste\recipes_ingredients.csv')
+#    df = pd.read_csv(r'C:\Users\Angel\Desktop\EMPATHY\Test\empathy-food-waste\recipes_ingredients.csv')
+    df = pd.read_csv(r'C:\Users\3515\Downloads\empathy\empathy-food-waste\recipes_ingredients.csv')
     
     # Correctly interpret 'ingredients', 'procedures', and 'tags' columns as lists
     df['ingredients'] = df['ingredients'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [])
@@ -77,6 +78,11 @@ def update_user():
     new_password = request.form['newpassword']
     confirm_password = request.form['confpassword']
     email = request.form['Email']
+
+    # Retrieve user preferences from the form data
+    food_preferences = request.form.getlist('foodPreference')
+    dietary_preferences = request.form.getlist('dietaryPreference')
+    allergens = request.form.getlist('allergen')
     
     # Validate form data (for example, check if passwords match)
     if new_password != confirm_password:
@@ -91,7 +97,13 @@ def update_user():
         # Update user information in the database
         mongo.db.users.update_one(
             {"name": username},
-            {"$set": {"password": hashed_password.decode(), "email": email}}
+            {"$set": {
+                "password": hashed_password.decode(),
+                "email": email,
+                "food_preferences": food_preferences,
+                "dietary_preferences": dietary_preferences,
+                "allergens": allergens
+            }}
         )
 
         # Redirect the user back to the edituser page or any other appropriate page
