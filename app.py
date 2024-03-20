@@ -19,12 +19,14 @@ def load_data():
     # df = pd.read_csv(r'D:\DLSU\PM\4th Year - Term 2 (23-24)\EMPATHY\Datasets\recipes_ingredients.csv')
 #    df = pd.read_csv(file_path)
     
-    df = pd.read_csv(r'D:\DLSU\PM\4th Year - Term 2 (23-24)\EMPATHY\Datasets\recipes_ingredients.csv')
-    
-    # Correctly interpret 'ingredients', 'procedures', and 'tags' columns as lists
+#    df = pd.read_csv(r'D:\DLSU\PM\4th Year - Term 2 (23-24)\EMPATHY\Datasets\recipes_ingredients.csv')
+    df = pd.read_csv(r'C:\Users\3515\Downloads\empathy\empathy-food-waste\recipes_ingredients.csv')
+
+
+    # Correctly interpret 'ingredients', 'steps', and 'tags' columns as lists
     df['ingredients'] = df['ingredients'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [])
     df['tags'] = df['tags'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [])
-    df['steps'] = df['steps'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else []) 
+#    df['steps'] = df['steps'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else []) 
 
     # Combine ingredients and tags into a single string per recipe
     df['combined_features'] = df.apply(lambda row: ' '.join(row['ingredients']) + ' ' + ' '.join(row['tags']), axis=1)
@@ -81,7 +83,23 @@ def update_user():
         return "Passwords do not match. Please try again."
     
     # Update user information in the database or perform other necessary actions
-    # will add here ! when nahanap ko na db AHSAHA
+    try:
+        # Hash the new password before updating
+        salt_rounds = 15
+        hashed_password = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt(salt_rounds))
+        
+        # Update user information in the database
+        mongo.db.users.update_one(
+            {"name": username},
+            {"$set": {"password": hashed_password.decode(), "email": email}}
+        )
+
+        # Redirect the user back to the edituser page or any other appropriate page
+        return render_template('edituser.html')
+
+    except Exception as e:
+        print("Error updating user information:", e)
+        return "Error updating user information.", 500
 
     # Redirect the user back to the edituser page or any other appropriate page
     return render_template('edituser.html')
@@ -133,6 +151,14 @@ def show_recipe(recipe_id):
     row = df[df['id'] == recipe_id]
     # Convert the row to a dictionary
     row_data = row.iloc[0].to_dict()
+
+    # Remove commas after periods in steps
+    if 'steps' in row_data:
+        row_data['steps'] = row_data['steps'].replace('. ,', '. ')
+
+    # Remove brackets from steps
+    if 'steps' in row_data:
+        row_data['steps'] = row_data['steps'].replace('[', '').replace(']', '')
     
     return render_template('recipepage.html', row=row_data)
 
