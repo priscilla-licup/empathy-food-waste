@@ -4,13 +4,21 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import ast
+from flask_pymongo import PyMongo
+from bson import ObjectId
+import bcrypt
 
 app = Flask(__name__)
 
+app.config["MONGO_URI"] = "mongodb://localhost:27017/Login"
+mongo = PyMongo(app)
+
 # Load your dataset here
 def load_data():
-    file_path = 'C:\\Users\\Solid State Drive\\Documents\\GitHub\\empathy-food-waste\\recipes_ingredients.csv'  # Update this path
-    df = pd.read_csv(file_path)
+#    file_path = 'C:\Users\Angel\Desktop\EMPATHY\Test\empathy-food-waste\recipes_ingredients.csv'  # Update this path
+#    df = pd.read_csv(file_path)
+    
+    df = pd.read_csv(r'C:\Users\Angel\Desktop\EMPATHY\FoodWaste\empathy-food-waste\recipes_ingredients.csv')
     
     # Correctly interpret 'ingredients' and 'tags' columns as lists
     df['ingredients'] = df['ingredients'].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [])
@@ -106,6 +114,83 @@ def show_recipe(recipe_id):
     row_data = row.iloc[0].to_dict()
     
     return render_template('recipepage.html', row=row_data)
+
+@app.route('/registerLogin')
+def registerLogin():
+    return render_template('registerLogin.html')
+
+@app.route("/register", methods=["POST"])
+def register():
+    try:
+        data = request.json
+        
+        username = data["username"]
+        regpassword = data["regpassword"]
+        regpassword2 = data["regpassword2"]
+        email = data["Email"]
+
+        existing_user = mongo.db.users.find_one({"name": username})
+        existing_email = mongo.db.users.find_one({"email": email})
+
+        response = {}
+
+        if existing_user:
+            response["usernameExists"] = True
+        else: 
+            response["usernameExists"] = False
+
+        if existing_email:
+            response["emailExists"] = True
+        else:
+            response["emailExists"] = False
+
+        if regpassword != regpassword2:
+            response["passwordsMatch"] = False
+        else:
+            response["passwordsMatch"] = True
+
+        if len(regpassword) < 8:  
+            response["passwordLength"] = False
+        else:
+            response["passwordLength"] = True
+
+        if not(response.get("usernameExists")) and not(response.get("emailExists")) and response.get("passwordsMatch") and response.get("passwordLength"):
+            response["success"] = True
+            salt_rounds = 15
+            hashed_password = bcrypt.hashpw(regpassword.encode(), bcrypt.gensalt(salt_rounds))
+            mongo.db.users.insert_one({"name": username, "password": hashed_password.decode(), "email": email})
+            
+        return jsonify(response), 200    
+
+    except Exception as e:
+        print("Error registering user:", e)
+        return "Error registering user.", 500
+
+@app.route("/login", methods=["POST"])
+def login():
+    try:
+        data = request.json
+        
+        login_username = data["loginusername"]
+        login_password = data["loginpassword"]
+
+        user = mongo.db.users.find_one({"name": login_username})
+        response = {}
+
+        if not user:
+            response["usernameNotFound"] = True
+        else:
+            is_password_match = bcrypt.checkpw(login_password.encode(), user["password"].encode())
+            if is_password_match:
+                response["success"] = True
+            else:
+                response["incorrectPassword"] = True
+
+        return jsonify(response), 200
+        
+    except Exception as e:
+        print("Error logging in:", e)
+        return "Error logging in.", 500
 
 
 if __name__ == '__main__':
