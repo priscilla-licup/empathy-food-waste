@@ -20,6 +20,19 @@
 
         <div class="cont">
             <div class="recipeblock">
+                <!-- Add this inside the .recipeblock div or wherever appropriate -->
+                <div class="like-button">
+                    {% if user_liked %}
+                        <form action="{{ url_for('unlike_recipe', recipe_id=row['id']) }}" method="post">
+                            <button type="submit">Unlike</button>
+                        </form>
+                    {% else %}
+                        <form action="{{ url_for('like_recipe', recipe_id=row['id']) }}" method="post">
+                            <button type="submit">Like</button>
+                        </form>
+                    {% endif %}
+                </div>
+
                 <div class="ingredientsblock">
                     {% for ingredient in row['ingredients'] %}
                     <h4>{{ ingredient }}</h4>

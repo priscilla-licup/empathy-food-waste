@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify, session
+from flask import Flask, request, render_template, jsonify, session, redirect, url_for
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -205,6 +205,13 @@ def recommend():
 # Individual Recipe Page -- MICH
 @app.route('/recipe/<int:recipe_id>')
 def show_recipe(recipe_id):
+    login_username = session.get("username", None)
+    user_liked = False
+
+    if login_username:
+        user = mongo.db.users.find_one({"name": login_username})
+        user_liked = recipe_id in user.get('liked_recipes', [])
+
     row = df[df['id'] == recipe_id]
     # Convert the row to a dictionary
     row_data = row.iloc[0].to_dict()
@@ -217,7 +224,39 @@ def show_recipe(recipe_id):
     if 'steps' in row_data:
         row_data['steps'] = row_data['steps'].replace('[', '').replace(']', '')
     
-    return render_template('recipepage.html', row=row_data)
+    return render_template('recipepage.html', row=row_data, user_liked=user_liked)
+
+# Recipe Page
+
+@app.route('/like_recipe/<int:recipe_id>', methods=['POST'])
+def like_recipe(recipe_id):
+    login_username = session.get("username")
+    if not login_username:
+        # Handle not logged in case, maybe redirect to login page
+        return render_template('registerLogin.html')
+
+    # Add the recipe_id to the user's list of liked recipes
+    mongo.db.users.update_one(
+        {"name": login_username},
+        {"$addToSet": {"liked_recipes": recipe_id}}  # Use $addToSet to avoid duplicates
+    )
+    
+    # Redirect back to the recipe page or return success response for AJAX
+    return redirect(url_for('show_recipe', recipe_id=recipe_id))
+
+@app.route('/unlike_recipe/<int:recipe_id>', methods=['POST'])
+def unlike_recipe(recipe_id):
+    login_username = session.get("username")
+    if not login_username:
+        return redirect(url_for('login'))
+
+    mongo.db.users.update_one(
+        {"name": login_username},
+        {"$pull": {"liked_recipes": recipe_id}}  # Use $pull to remove the recipe_id
+    )
+
+    return redirect(url_for('show_recipe', recipe_id=recipe_id))
+
 
 @app.route('/registerLogin')
 def registerLogin():
@@ -310,6 +349,9 @@ def logout():
 @app.route("/debug")
 def debug():
     return jsonify(session)
+
+
+
     
 
 if __name__ == '__main__':
