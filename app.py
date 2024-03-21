@@ -21,7 +21,7 @@ def load_data():
 #    df = pd.read_csv(file_path)
     
 #    df = pd.read_csv(r'D:\DLSU\PM\4th Year - Term 2 (23-24)\EMPATHY\Datasets\recipes_ingredients.csv')
-    df = pd.read_csv(r'D:\DLSU\PM\4th Year - Term 2 (23-24)\EMPATHY\Datasets\recipes_ingredients_sample.csv')
+    df = pd.read_csv(r'C:\Users\Angel\Desktop\EMPATHY\Test\empathy-food-waste\recipes_ingredients.csv')
     # df = pd.read_csv(r'C:\Users\3515\Downloads\empathy\empathy-food-waste\recipes_ingredients.csv')
     
     # Correctly interpret 'ingredients', 'procedures', and 'tags' columns as lists
@@ -71,9 +71,9 @@ def home():
     else:
         user = mongo.db.users.find_one({"name": login_username})
     
-        food_preferences = user['food_preferences']
-        dietary_preferences = user['dietary_preferences']
-        allergens = user['allergens']
+        food_preferences = user.get('food_preferences', [])
+        dietary_preferences = user.get('dietary_preferences', [])
+        allergens = user.get('allergens', [])
 
         return render_template('home.html', food_preferences=food_preferences, dietary_preferences=dietary_preferences, allergens=allergens)  # Create an index.html template for your form
 
@@ -88,9 +88,9 @@ def edituser():
     else:
        user = mongo.db.users.find_one({"name": login_username})
     
-       food_preferences = user['food_preferences']
-       dietary_preferences = user['dietary_preferences']
-       allergens = user['allergens']
+       food_preferences = user.get('food_preferences', [])
+       dietary_preferences = user.get('dietary_preferences', [])
+       allergens = user.get('allergens', [])
        
        return render_template('edituser.html', food_preferences=food_preferences, dietary_preferences=dietary_preferences, allergens=allergens)
     
@@ -203,7 +203,7 @@ def recommend():
     return render_template('reciperecommend.html', data=recommendations_list)
 
 @app.route('/NEW', methods=['POST'])
-def recommend():
+def new_recommend():
     login_username = session.get("username", None)
     
     ingredients = request.form['ingredients']
