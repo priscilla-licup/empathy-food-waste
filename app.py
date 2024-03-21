@@ -63,23 +63,37 @@ def mainpage():
 # Home/Model Page
 @app.route('/')
 def home():
-    login_username = session["username"]
+    login_username = session.get("username", None)
 
-    user = mongo.db.users.find_one({"name": login_username})
-    
-    food_preferences = user['food_preferences']
-    dietary_preferences = user['dietary_preferences']
-    allergens = user['allergens']
-
-    if user == None :
+    # Then, check if login_username is None (or your specified default) to determine if it exists.
+    if login_username is None:
         return render_template('home.html')
     else:
+        user = mongo.db.users.find_one({"name": login_username})
+    
+        food_preferences = user['food_preferences']
+        dietary_preferences = user['dietary_preferences']
+        allergens = user['allergens']
+
         return render_template('home.html', food_preferences=food_preferences, dietary_preferences=dietary_preferences, allergens=allergens)  # Create an index.html template for your form
 
 # Edit User Page -- MICH
 @app.route('/edituser')
 def edituser():
-    return render_template('edituser.html')  # Create an index.html template for your form
+    login_username = session.get("username", None)
+
+    # Then, check if login_username is None (or your specified default) to determine if it exists.
+    if login_username is None:
+        return render_template('registerLogin.html')
+    else:
+       user = mongo.db.users.find_one({"name": login_username})
+    
+       food_preferences = user['food_preferences']
+       dietary_preferences = user['dietary_preferences']
+       allergens = user['allergens']
+       
+       return render_template('edituser.html', food_preferences=food_preferences, dietary_preferences=dietary_preferences, allergens=allergens)
+    
 
 # Update User Information
 @app.route('/update_user', methods=['POST'])
@@ -207,6 +221,7 @@ def show_recipe(recipe_id):
 
 @app.route('/registerLogin')
 def registerLogin():
+    
     return render_template('registerLogin.html')
 
 @app.route("/register", methods=["POST"])

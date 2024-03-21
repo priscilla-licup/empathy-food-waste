@@ -190,3 +190,11 @@ tr:hover {
     font-size: 12px;
     font-weight: 500;
 }
+
+/* Logout Button */
+
+.logout-btn {
+    max-width: 2.5%;  
+    height: 2.5%;  
+    margin-right: 0px;
+}
