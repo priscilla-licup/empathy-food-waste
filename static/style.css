@@ -18,6 +18,10 @@
     text-shadow: 2px 2px 5px black;
     justify-content: space-between;  
     align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 .topbar h1{
     padding: 5px;
@@ -49,6 +53,7 @@
     font-family: 'Inter', sans-serif;
     position: relative;
     padding-bottom: 10px;
+    padding-top: 10px;
     height: 83%;
     flex-direction: column;
     display: flex;
@@ -84,9 +89,7 @@ html, body{
     height: 100%;
     margin: 0;
     padding: 0;
-    
 }
-
 
 .formcont{
     background-color: #F7F6BB;
@@ -100,6 +103,8 @@ html, body{
 .formbox{
     padding-top: 2%;
     padding-right: 10%;
+    border-radius: 10px;
+    background-color: #F7F6BB;
 }
 .prefbox{
     display: flex;
@@ -112,6 +117,9 @@ html, body{
     justify-content: right;
     padding-top: 30%;
     padding-left: 10%;
+    border-radius: 10px;
+    background-color: #F7F6BB;
+    margin-bottom: 20px;
 }
 .pref1{
     padding: 0;
@@ -122,20 +130,35 @@ html, body{
 .loginbox{
     padding-top: 2.5%;
     padding-left: 10%;
-    
+    border-radius: 10px;
+    background-color: #F7F6BB;
 }
 .recobox{
     margin-left: 5%;
-}
-.recipebox{
-    
+    border-radius: 10px;
     margin-right: 5%;
+}
+.recipebox{   
+    margin-right: 5%;
+    border-radius: 10px;
+    background-color: #F7F6BB;
 }
 
 .recipeblock{
     margin-left: 5%;
-    border: 0.5px solid black;
     width: 90%;
+}
+
+.headerintro{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 5%;
+}
+
+.Register{
+    margin-bottom: 20px;
 }
 
 /* Home page */
@@ -147,6 +170,8 @@ html, body{
     border-radius: 5px; /* Optional: rounds the corners of the border */
     background-color: #f9f9f9; /* Light background color */
     margin: 10px;
+    border-radius: 10px;
+    background-color: #F7F6BB;
 }
 
 label {

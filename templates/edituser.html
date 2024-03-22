@@ -18,7 +18,9 @@
             <a href="{{ url_for('logout') }}"> <img src="{{ url_for('static', filename='Assets/logoutIcon.png') }}"></a>
         </div>
         <div class="cont">
-            <h1>Need to Change Your Information?</h1>
+            <div class="headerintro">
+                <h2>Need to Change Your Information?</h2>
+            </div>
                 <div class="formcont">
                     <div class="formbox">
                         <form action="/update_user" method="POST">

@@ -17,8 +17,11 @@
             <a href="{{ url_for('home') }}"><p style="margin: 0px; text-align: justify;">Recommender</p></a>
             <a href="{{ url_for('edituser') }}"> <img src="{{ url_for('static', filename='Assets/accounticon.png') }}"></a>
         </div>
+        
         <div class="cont">
-            <h2>Don't have an account? Sign up here!</h2>
+            <div class="headerintro">
+                <h2>Don't have an account? Sign up here!</h2>
+            </div>
             <div class="formcont">
 
                 <div class="formbox">
@@ -55,6 +58,7 @@
                         <span id="userpassword-message" class="error"></span><br><br><br>
 
                         <button class="login" type="submit">Login</button>
+                        </br>
                     </form>
                 </div>
             </div>
