@@ -6,21 +6,42 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Recipe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        h1, h2 {
+            color: #114232;
+            margin-bottom: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+        h4, li {
+            color: #333;
+            font-weight: normal;
+            margin: 5px 0;
+        }
+        /* ul {
+            list-style-type: none;
+            padding: 0;
+        } */
+    </style>
 </head>
 
 <body>
     <main>
         <div class="topbar">
-            <a href="{{ url_for('mainpage') }}"> <img src="{{ url_for('static', filename='Assets/Logo.png') }}"></a>
-            <a href="{{ url_for('mainpage') }}"><p style="margin: 0px; text-align: justify;">About</p></a>
-            <a href="{{ url_for('home') }}"><p style="margin: 0px; text-align: justify;">Recommender</p></a>
-            <a href="{{ url_for('edituser') }}"> <img src="{{ url_for('static', filename='Assets/accounticon.png') }}"></a>\
-            <a href="{{ url_for('logout') }}"> <img src="{{ url_for('static', filename='Assets/logoutIcon.png') }}"></a>
+            <a href="{{ url_for('mainpage') }}"><img src="{{ url_for('static', filename='Assets/Logo.png') }}" alt="Logo"></a>
+            <a href="{{ url_for('mainpage') }}"><p>About</p></a>
+            <a href="{{ url_for('home') }}"><p>Recommender</p></a>
+            <a href="{{ url_for('edituser') }}"><img src="{{ url_for('static', filename='Assets/accounticon.png') }}" alt="Account Icon"></a>
+            <a href="{{ url_for('logout') }}"><img src="{{ url_for('static', filename='Assets/logoutIcon.png') }}" alt="Logout Icon"></a>
         </div>
 
-        <div class="cont">
+        <div class="contrecipe">
             <div class="recipeblock">
-                <!-- Add this inside the .recipeblock div or wherever appropriate -->
+                <!-- Recipe Name -->
+                <div class="recipe-name">
+                    <h1>{{ row['name'] }}</h1><!-- Assuming 'name' is the field for the recipe's name -->
+                </div>
+
+                <!-- Like button -->
                 <div class="like-button">
                     {% if user_liked %}
                         <form action="{{ url_for('unlike_recipe', recipe_id=row['id']) }}" method="post">
@@ -33,29 +54,32 @@
                     {% endif %}
                 </div>
 
+                <!-- Ingredients List -->
                 <div class="ingredientsblock">
-                    {% for ingredient in row['ingredients'] %}
-                    <h4>{{ ingredient }}</h4>
-                    {% endfor %}
+                    <h2>Ingredients:</h2>
+                    <ul>
+                        {% for ingredient in row['ingredients'] %}
+                            <li><h4>{{ ingredient }}</h4></li>
+                        {% endfor %}
+                    </ul>
+                    
                 </div>
+
+                <!-- Cooking Procedure -->
                 <div class="procedureblock">
                     <h2>Procedure:</h2>
-                    <ul>
+                    <ol>
                         {% for step in row['steps'].split('"') %}
                             {% set formatted_step = step|replace(',', '') %}
                             {% if formatted_step.strip() %}
-                                <h4><li>{{ formatted_step }}</li></h4>
+                                <li><h4>{{ formatted_step }}</h4></li>
                             {% endif %}
                         {% endfor %}
-                    </ul>
+                    </ol>
                 </div>
             </div>
-
-        
         </div>
-
     </main>
-
 </body>
 
 </html>

@@ -21,7 +21,7 @@ def load_data():
 #    df = pd.read_csv(file_path)
     
 #    df = pd.read_csv(r'D:\DLSU\PM\4th Year - Term 2 (23-24)\EMPATHY\Datasets\recipes_ingredients.csv')
-    df = pd.read_csv(r'C:\Users\Angel\Desktop\EMPATHY\Test\empathy-food-waste\recipes_ingredients.csv')
+    df = pd.read_csv(r'recipes_ingredients.csv')
     # df = pd.read_csv(r'C:\Users\3515\Downloads\empathy\empathy-food-waste\recipes_ingredients.csv')
     
     # Correctly interpret 'ingredients', 'procedures', and 'tags' columns as lists
@@ -201,40 +201,6 @@ def recommend():
     # return jsonify(recommendations=recommendations_list)
 
     return render_template('reciperecommend.html', data=recommendations_list)
-
-@app.route('/NEW', methods=['POST'])
-def new_recommend():
-    login_username = session.get("username", None)
-    
-    ingredients = request.form['ingredients']
-    food_preferences = request.form.getlist('foodPreference')
-    dietary_preferences = request.form.getlist('dietaryPreference')
-    allergens = request.form.getlist('allergen')
-
-    ingredients_list = [ingredient.strip() for ingredient in ingredients.split(',')]
-    all_preferences = ingredients_list + food_preferences + dietary_preferences + allergens
-    
-    user_input = ' '.join(all_preferences)
-
-    # Fetch liked recipes for the user and append to user input
-    if login_username:
-        liked_recipes = get_user_liked_recipes(login_username)
-        for index, row in liked_recipes.iterrows():
-            user_input += ' ' + ' '.join(row['ingredients']) + ' ' + ' '.join(row['tags'])
-    
-    # Vectorize the combined user input
-    user_input_tfidf = vectorizer.transform([user_input])
-    cosine_sim = cosine_similarity(user_input_tfidf, tfidf_matrix)
-    sim_scores = list(enumerate(cosine_sim[0]))
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:11]  # Get top 10 similar recipes
-    recipe_indices = [i[0] for i in sim_scores]
-    recommendations = df.iloc[recipe_indices]
-
-    recommendations_list = recommendations.to_dict(orient='records')
-    
-    return render_template('reciperecommend.html', data=recommendations_list)
-
 
 # Individual Recipe Page -- MICH
 @app.route('/recipe/<int:recipe_id>')

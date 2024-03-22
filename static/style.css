@@ -135,7 +135,9 @@ html, body{
 }
 .recobox{
     margin-left: 5%;
-    border-radius: 10px;
+}
+/* .recipebox{
+    
     margin-right: 5%;
 }
 .recipebox{   
@@ -147,7 +149,7 @@ html, body{
 .recipeblock{
     margin-left: 5%;
     width: 90%;
-}
+} */
 
 .headerintro{
     margin-left: 10%;
@@ -223,3 +225,57 @@ tr:hover {
     height: 2.5%;  
     margin-right: 0px;
 }
+
+
+/* Recipe Page */
+
+.cont {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.contrecipe {
+    padding: 20px;
+    padding-bottom: 40px;
+}
+
+.recipeblock {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 8px 16px rgb(17, 66, 50);
+    padding: 20px;
+    width: 80%;
+    max-width: 1000px;
+    margin: auto;
+    margin-top: 50px;
+    
+}
+.recipe-name {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 28px;
+    color: #333;
+}
+.ingredientsblock, .procedureblock {
+    margin-bottom: 20px;
+}
+.like-button button {
+    background-color: #114232;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block; /* Center the button */
+    margin: 20px 0;
+}
+.like-button button:hover {
+    background-color: #114232b9;
+}
+
+/* .procedureblock li {
+    margin-left: 20px;
+    text-indent: -20px;
+} */
